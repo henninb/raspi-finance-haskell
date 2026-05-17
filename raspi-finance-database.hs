@@ -19,6 +19,7 @@ import Data.Time.Format (formatTime)
 import Data.Time.Clock
 import Data.List
 import System.Directory
+import System.Environment (getArgs)
 --import Data.String.Utils
 import Database.PostgreSQL.Simple
 import Database.PostgreSQL.Simple.FromRow
@@ -50,20 +51,11 @@ instance FromRow Transaction
 instance ToRow Transaction
 
 main :: IO ()
-main = do putStrLn "--- separated ---"
-          conn <- connect defaultConnectInfo { connectHost = "postgresql.bhenning.com", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
-          putStrLn "--- separated ---"
-          mapM_ print =<< (query_ conn "SELECT 1 + 1" :: IO [Only Int])
-          putStrLn "--- separated ---"
-          mapM_ print =<< (query conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type FROM t_transaction WHERE guid = ? and account_name_owner = ?" ("423fa3d2-d6e9-4dbf-bd39-928d284ad1a6" :: String, "chase_brian" :: String) :: IO [Transaction])
-          putStrLn "--- separated ---"
---          mapM_ print =<< (query conn "SELECT guid,description,category,sha256,account_type,account_name_owner,notes,cleared,account_id,transaction_id,reoccurring,date_updated, date_added,transaction_date FROM t_transaction WHERE guid = ? and account_name_owner = ?" ("423fa3d2-d6e9-4dbf-bd39-928d284ad1a6" :: String, "chase_brian" :: String) :: IO [Transaction])
-          putStrLn "--- separated ---"
---          mapM_ print =<< (query_ conn transactionQuery :: IO [Transaction]) where transactionQuery = "SELECT guid,description,account_type,account_name_owner FROM t_transaction LIMIT 1"
-          mapM_ print =<< (query_ conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type FROM t_transaction LIMIT 10" :: IO [Transaction])
-          putStrLn "--- separated ---"
-          mapM_ print =<< (query_ conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type from t_transaction" :: IO [Transaction])
-          putStrLn "--- separated ---"
-          mapM_ print =<< (query_ conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type FROM t_transaction WHERE guid='0d4d5664-bb66-4d15-951b-42ef78b4e411'" :: IO [Transaction])
-          -- mapM_ print =<< (query_ conn "SELECT guid,description,category,sha256,account_type,account_name_owner,notes,cleared,account_id,transaction_id,reoccurring FROM t_transaction WHERE guid='" ++ "423fa3d2-d6e9-4dbf-bd39-928d284ad1a6" ++ "'" :: IO [Transaction])
---          putStrLn "--- separated ---"
+main = do
+    args <- getArgs
+    case args of
+        [account] -> do
+            conn <- connect defaultConnectInfo { connectHost = "postgresql.bhenning.com", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
+            transactions <- query conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type FROM t_transaction WHERE account_name_owner = ? ORDER BY transaction_id" (Only account) :: IO [Transaction]
+            mapM_ print transactions
+        _ -> putStrLn "usage: raspi-finance-database <account_name_owner>"

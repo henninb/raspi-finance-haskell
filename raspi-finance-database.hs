@@ -15,12 +15,10 @@ import Data.Time
 import qualified Data.Time as Time
 import qualified Data.ByteString as SB
 import qualified Data.ByteString.Lazy as LB
-import System.Locale (defaultTimeLocale)
 import Data.Time.Format (formatTime)
 import Data.Time.Clock
 import Data.List
 import System.Directory
-import Data.Aeson.Parser
 --import Data.String.Utils
 import Database.PostgreSQL.Simple
 import Database.PostgreSQL.Simple.FromRow

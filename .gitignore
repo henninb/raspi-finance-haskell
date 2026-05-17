@@ -2,3 +2,4 @@ raspi-finance-haskell
 .idea
 raspi-finance
 raspi-finance-database
+.stack-work/

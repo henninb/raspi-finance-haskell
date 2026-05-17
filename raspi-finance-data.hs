@@ -159,7 +159,7 @@ main = do putStrLn "--- start ---"
           singleRecord <- LB.readFile "file.json"
           records <- LB.readFile "filelist.json"
           list <- LB.readFile "list.json"
-          conn <- connect defaultConnectInfo { connectHost = "localhost", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
+          conn <- connect defaultConnectInfo { connectHost = "postgresql.bhenning.com", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
           print (decode singleRecord :: Maybe Transaction)
           putStrLn "--- separated ---"
           print (decode records :: Maybe [Transaction])

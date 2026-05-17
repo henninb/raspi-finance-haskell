@@ -219,7 +219,7 @@ main = do putStrLn "read file and load it to a structure."
           --all <- getDirectoryContents "../raspi-finance-convert/json_in/.processed"
 
 --          conn <- connectPostgreSQL "host=localhost port=5432 connect_timeout=10 connectDatabase=finance_db"
-          conn <- connect defaultConnectInfo { connectHost = "localhost", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
+          conn <- connect defaultConnectInfo { connectHost = "postgresql.bhenning.com", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
 
           --listBySuit = [ x = "one" | x <- jsonFiles]
 

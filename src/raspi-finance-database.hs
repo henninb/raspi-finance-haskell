@@ -49,6 +49,7 @@ data Transaction = Transaction
 
 instance FromRow Transaction
 instance ToRow Transaction
+instance ToJSON Transaction
 
 main :: IO ()
 main = do
@@ -57,5 +58,5 @@ main = do
         [account] -> do
             conn <- connect defaultConnectInfo { connectHost = "postgresql.bhenning.com", connectDatabase = "finance_db", connectUser = "henninb", connectPassword = "monday1"}
             transactions <- query conn "SELECT guid,description,category,account_type,account_name_owner,notes,transaction_state,account_id,transaction_id,reoccurring_type FROM t_transaction WHERE account_name_owner = ? ORDER BY transaction_id" (Only account) :: IO [Transaction]
-            mapM_ print transactions
+            BL.putStrLn (encode transactions)
         _ -> putStrLn "usage: raspi-finance-database <account_name_owner>"

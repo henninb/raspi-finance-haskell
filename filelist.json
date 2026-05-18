@@ -1,5 +1,0 @@
-[
-{"transactionId":0,"guid":"9f9f13eb-1f31-4735-817f-bf63c8319cd1","accountId":0,"accountType":"debit","accountNameOwner":"wfargo-checking_brian","transactionDate":1513008790000,"description":"Last updated","category":"","amount":0.00,"cleared":-1,"reoccurring":false,"notes":"Statement closing date - tbd","dateUpdated":1485612407000,"dateAdded":1485612407000,"sha256":""},
-
-{"transactionId":0,"guid":"9f9f13eb-1f31-bbbb-aaaa-bf63c8319cd1","accountId":0,"accountType":"debit","accountNameOwner":"wfargo-checking_brian","transactionDate":1513008790000,"description":"Last updated","category":"","amount":0.00,"cleared":-1,"reoccurring":false,"notes":"Statement closing date - tbd","dateUpdated":1485612407000,"dateAdded":1485612407000,"sha256":""}
-]
